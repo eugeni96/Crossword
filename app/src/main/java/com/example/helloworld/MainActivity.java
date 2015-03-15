@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.InputFilter;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -47,6 +48,8 @@ public class MainActivity extends Activity {
                 };
                 cell.setMaxLines(1);
                 cell.setEms(2);
+                cell.setBackground(null);
+                cell.setGravity(Gravity.CENTER_HORIZONTAL);
                 InputFilter[] fArray = new InputFilter[1];
                 fArray[0] = new InputFilter.LengthFilter(1);
                 cell.setFilters(fArray);
