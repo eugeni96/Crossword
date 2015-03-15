@@ -6,13 +6,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.text.InputFilter;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
     /** Called when the activity is first created. */
@@ -27,37 +27,37 @@ public class MainActivity extends Activity {
 
         TableLayout table = new TableLayout(this);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 20; i++) {
 
             TableRow row = new TableRow(this);
 
-            for (int j = 0; j < 100; j++) {
+            for (int j = 0; j < 20; j++) {
 
-                TextView cell = new TextView(this) {
+                EditText cell = new EditText(this) {
                     @Override
-                    protected void onDraw(Canvas canvas) {
+                    protected void onDraw(@NonNull Canvas canvas) {
                         super.onDraw(canvas);
                         Rect rect = new Rect();
                         Paint paint = new Paint();
                         paint.setStyle(Paint.Style.STROKE);
-                        paint.setColor(Color.WHITE);
-                        paint.setStrokeWidth(2);
+                        paint.setColor(Color.BLACK);
                         getLocalVisibleRect(rect);
                         canvas.drawRect(rect, paint);
                     }
-
                 };
+                cell.setMaxLines(1);
+                cell.setEms(2);
+                InputFilter[] fArray = new InputFilter[1];
+                fArray[0] = new InputFilter.LengthFilter(1);
+                cell.setFilters(fArray);
                 cell.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                       public void onClick(View v) {
-                           Toast.makeText(getApplicationContext(), ((TextView) v).getText() + "!!!", Toast.LENGTH_SHORT).show();
-                           ((TextView)v).setText("0");
-                           }
-                       }
-                    );
-                cell.setText(i + ", " + j);
-                cell.setPadding(6, 4, 6, 4);
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        }
+                );
                 row.addView(cell);
 
             }
