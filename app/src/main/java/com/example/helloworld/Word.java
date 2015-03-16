@@ -2,7 +2,6 @@ package com.example.helloworld;
 
 import java.util.List;
 
-
 public class Word {
     List<EditCell> str;
 
@@ -10,10 +9,4 @@ public class Word {
         this.str = str;
 
     }
-
-
-
-
-
-
 }
