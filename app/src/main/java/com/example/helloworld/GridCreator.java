@@ -17,9 +17,8 @@ public class GridCreator {
 
             for (int j = 0; j < cols; j++) {
 
-                EditText cell = new EditCell(activity, "original");
+                EditText cell = new EditCell(activity, "original", i, j);
                 row.addView(cell);
-
             }
             table.addView(row);
         }

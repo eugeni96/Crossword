@@ -13,9 +13,14 @@ import android.widget.EditText;
 
 public class EditCell extends EditText {
 
-    public EditCell(Context context, String style) {
+    private int row;
+    private int col;
+
+    public EditCell(Context context, String style, int row, int col) {
         super(context);
         SetStyle(style);
+        setRow(row);
+        setCol(col);
     }
 
     private void SetStyle(String style)
@@ -36,5 +41,21 @@ public class EditCell extends EditText {
                 setBackground(border);
             }
         }
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
     }
 }
