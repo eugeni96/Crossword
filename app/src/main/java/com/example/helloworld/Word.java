@@ -1,5 +1,7 @@
 package com.example.helloworld;
 
+import android.app.Activity;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,9 +10,8 @@ public class Word {
 
     List<EditCell>  letterList;
     String          word;
-    int             startRow;
-    int             startCol;
     int             length;
+    boolean         horizontal;
 
     Word()
     {
@@ -18,17 +19,33 @@ public class Word {
         word = "";
     }
 
-    Word(EditCell... cells)
+    public Word(EditCell... cells)
     {
+        this();
         Collections.addAll(letterList, cells);
         length = letterList.size();
-        startRow = letterList.get(1).getRow();
-        startCol = letterList.get(1).getCol();
     }
 
-    Word(int startRow, int startCol, int length) {
-        this.startCol = startCol;
-        this.startRow = startRow;
+    public Word(List<EditCell> cells)
+    {
+        this();
+        letterList = cells;
+        length = letterList.size();
+        letterList.get(0).setWord(this);
+    }
+
+    public Word(Activity activity, int firstCellId, int length, boolean horizontal) {
+        this();
         this.length = length;
+        this.horizontal = horizontal;
+        EditCell firstCell = (EditCell) activity.findViewById(firstCellId);
+        letterList.add(firstCell);
+    }
+
+    public void SetNextCells()
+    {
+        for (int i = 0; i < length - 1; i++) {
+            letterList.get(i).setNext(letterList.get(i+1));
+        }
     }
 }
