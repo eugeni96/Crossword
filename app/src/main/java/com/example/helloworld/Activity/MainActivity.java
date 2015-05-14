@@ -2,6 +2,7 @@ package com.example.helloworld.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.HorizontalScrollView;
 import android.widget.TableLayout;
 
@@ -27,11 +28,11 @@ public class MainActivity extends Activity {
         layout.addView(table);
 
         List<EditCell> cells = new ArrayList<>();
-        cells.add((EditCell) layout.findViewById(12));
-        cells.add((EditCell) layout.findViewById(22));
-        cells.add((EditCell) layout.findViewById(32));
-        cells.add((EditCell)findViewById(42));
-        cells.add((EditCell)findViewById(52));
+        cells.add((EditCell) findViewById(12));
+        cells.add((EditCell) findViewById(22));
+        cells.add((EditCell) findViewById(32));
+        cells.add((EditCell) findViewById(42));
+        cells.add((EditCell) findViewById(52));
 
         Word firstWord = new Word(cells);
 
