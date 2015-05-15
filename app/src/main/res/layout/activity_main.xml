@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/question_view" />
+
     <ScrollView
         android:id="@+id/layout"
         android:layout_height="match_parent"
@@ -13,8 +19,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="5dip"
         android:scrollbarStyle="outsideInset"
-        android:fillViewport="true"
-        android:layout_weight="1">
+        android:fillViewport="true">
 
         <HorizontalScrollView
             android:id="@+id/horizontalView"
@@ -24,4 +29,5 @@
             android:layout_marginTop="5dip">
         </HorizontalScrollView>
     </ScrollView>
+
 </LinearLayout>

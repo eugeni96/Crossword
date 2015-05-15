@@ -53,7 +53,7 @@ public class EditCell extends EditText {
                     next.requestFocus();
                     next = null;
                 }
-                clearFocus();
+                //clearFocus();
             }
 
             @Override
