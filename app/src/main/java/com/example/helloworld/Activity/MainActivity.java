@@ -29,34 +29,42 @@ public class MainActivity extends Activity {
 
         HorizontalScrollView layout = (HorizontalScrollView) findViewById(R.id.horizontalView);
 
-        TableLayout table = GridCreator.CreateGrid(this, 10, 10);
+
+        TableLayout table = GridCreator.CreateGrid(this, 9, 7);
 
         layout.addView(table);
 
         List<EditCell> cells1 = new ArrayList<>();
-        cells1.add((EditCell) findViewById(12));
-        cells1.add((EditCell) findViewById(22));
-        cells1.add((EditCell) findViewById(32));
-        cells1.add((EditCell) findViewById(42));
-        cells1.add((EditCell) findViewById(52));
-
-        Word firstWord = new Word(cells1);
+        for (int i=0; i<9; i++) {
+            cells1.add((EditCell) findViewById(2+i*7));
+        }
+        Word Word1 = new Word(cells1);
 
         List<EditCell> cells2 = new ArrayList<>();
-        cells2.add((EditCell) findViewById(13));
-        cells2.add((EditCell) findViewById(23));
-        cells2.add((EditCell) findViewById(33));
-        cells2.add((EditCell) findViewById(43));
-        cells2.add((EditCell) findViewById(53));
+        for (int i=0; i<5;i++) {
+            cells2.add((EditCell) findViewById(4+i*7));
+        }
+        Word Word2 = new Word(cells2);
 
-        Word firstWord1 = new Word(cells2);
+        List<EditCell> cells3 = new ArrayList<>();
+        for (int i=0; i<7;i++) {
+            cells3.add((EditCell) findViewById(14+i));
+        }
+        Word Word3 = new Word(cells3);
+
+        List<EditCell> cells4 = new ArrayList<>();
+        for (int i=0; i<5;i++) {
+            cells4.add((EditCell) findViewById(29+i));
+        }
+        Word Word4 = new Word(cells4);
 
 
         DBHelper helper = new DBHelper(this);
         Cursor c = helper.getWords();
+
         String text = null;
         if (c.moveToFirst()) {
-            text = c.getString(0);
+            text = c.getString(2);
         }
         c.close();
 

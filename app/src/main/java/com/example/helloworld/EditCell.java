@@ -83,6 +83,12 @@ public class EditCell extends EditText {
                 border.getPaint().setColor(Color.BLACK);
                 setBackground(border);
             }
+            case "empty":
+            {
+                setEms(2);
+
+
+            }
         }
     }
 
