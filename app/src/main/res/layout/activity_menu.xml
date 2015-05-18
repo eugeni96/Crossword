@@ -7,41 +7,40 @@
     tools:context="com.example.helloworld.Activity.MenuActivity">
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Game"
         android:id="@+id/newGameButton"
-        android:layout_alignParentTop="true"
+        android:clickable="false"
+        style="@style/Base.TextAppearance.AppCompat"
+        android:layout_above="@+id/saveGameButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="145dp"
-        android:clickable="false" />
+        android:layout_marginBottom="32dp" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="Save Game"
         android:id="@+id/saveGameButton"
+        android:clickable="false"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:clickable="false" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="Load Game"
         android:id="@+id/loadGameButton"
-        android:layout_marginBottom="44dp"
-        android:layout_above="@+id/exitButton"
-        android:layout_alignLeft="@+id/exitButton"
-        android:layout_alignStart="@+id/exitButton"
-        android:clickable="false" />
+        android:clickable="false"
+        android:layout_below="@+id/saveGameButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="Exit"
         android:id="@+id/exitButton"
         android:layout_marginBottom="49dp"
         android:layout_alignParentBottom="true"

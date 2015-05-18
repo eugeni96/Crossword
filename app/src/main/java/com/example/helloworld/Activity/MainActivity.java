@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.HorizontalScrollView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -61,6 +62,7 @@ public class MainActivity extends Activity {
 
         DBHelper helper = new DBHelper(this);
         Cursor c = helper.getWords();
+        int[] size = helper.getTemplateSize();
 
         String text = null;
         if (c.moveToFirst()) {

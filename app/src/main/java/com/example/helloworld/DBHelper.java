@@ -106,5 +106,24 @@ public class DBHelper extends SQLiteAssetHelper {
         Cursor c = db.rawQuery(queryString,null);
         return c;
     }
+    public int[] getTemplateSize()
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        String queryString = "SELECT x, y FROM TEMPLATE WHERE name = \"Easy breezy\" ";
+
+        Cursor c = db.rawQuery(queryString,null);
+
+        int[] size = new int[2];
+
+        if(c != null)
+        {
+            c.moveToFirst();
+            size[0] = c.getInt(c.getColumnIndex("x"));
+            size[1] = c.getInt(c.getColumnIndex("y"));
+        }
+
+        return size;
+    }
 
 }
