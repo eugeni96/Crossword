@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
             word.letterList.get(0);
         }
 
-        questionsView = (ListView) findViewById(R.id.listView);
+        questionsView = (ListView) findViewById(R.id.questions);
 
         for (Word word : words)
         {
