@@ -8,9 +8,11 @@ import java.util.List;
 
 public class Word {
 
-    List<EditCell>  letterList;
+    public List<EditCell>  letterList;
     String          word;
     int             length;
+    int             x;
+    int             y;
     boolean         horizontal;
 
     Word()
@@ -47,5 +49,26 @@ public class Word {
         for (int i = 0; i < length - 1; i++) {
             letterList.get(i).setNext(letterList.get(i+1));
         }
+    }
+
+    public void connectCells(Activity activity, int cols, int rows)
+    {
+        if(horizontal)
+        {
+            for (int i = 0; i < word.length(); i++) {
+                EditCell cell = (EditCell) Grid.grid.findViewById((x-1)*cols + y-1 + i);
+                cell.setStyle("original");
+                letterList.add(cell);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < word.length(); i++) {
+                EditCell cell = (EditCell) Grid.grid.findViewById((x-1)*cols + y-1 + cols*i);
+                cell.setStyle("original");
+                letterList.add(cell);
+            }
+        }
+        letterList.get(0).setWord(this);
     }
 }

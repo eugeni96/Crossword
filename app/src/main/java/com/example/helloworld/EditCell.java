@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -21,7 +20,7 @@ public class EditCell extends EditText {
 
     public EditCell(Context context, String style) {
         super(context);
-        SetStyle(style);
+        setStyle(style);
 
         setOnClickListener(new OnClickListener() {
             @Override
@@ -70,27 +69,37 @@ public class EditCell extends EditText {
         });
     }
 
-    private void SetStyle(String style)
+    public void setStyle(String style)
     {
+        setEms(2);
+        setGravity(Gravity.CENTER_HORIZONTAL);
+
+        ShapeDrawable border = new ShapeDrawable( new RectShape());
+        border.getPaint().setStyle(Paint.Style.STROKE);
+        border.getPaint().setColor(Color.BLACK);
+        setBackground(border);
+
         switch (style) {
             case "original":
             {
-                setEms(2);
-                setGravity(Gravity.CENTER_HORIZONTAL);
-
-                ShapeDrawable border = new ShapeDrawable( new RectShape());
-                border.getPaint().setStyle(Paint.Style.STROKE);
-                border.getPaint().setColor(Color.BLACK);
-                setBackground(border);
+                setClickable(true);
+                setFocusableInTouchMode(true);
+                break;
             }
-            case "empty":
+            case "block":
             {
-                setEms(2);
-
-
+                setBackgroundColor(Color.BLACK);
+                setClickable(false);
+                setFocusableInTouchMode(false);
+                break;
+            }
+            case "focus":
+            {
+                break;
             }
         }
     }
+
 
     public void setNext(EditCell next) {
         this.next = next;

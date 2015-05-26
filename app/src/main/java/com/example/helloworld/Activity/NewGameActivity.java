@@ -2,23 +2,56 @@ package com.example.helloworld.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.helloworld.DBHelper;
 import com.example.helloworld.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewGameActivity extends Activity {
 
     Button start;
+    ListView listTemplates;
+    ArrayAdapter<String> adapter;
+    ArrayList<String> listItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
+
+        listTemplates = (ListView) findViewById(R.id.listView);
+
+        DBHelper helper = new DBHelper(this);
+        List<String> listViewValues = helper.getTemplateNames();
+
+        for (int i = 0; i < listViewValues.size(); i++)
+        {
+            listItems.add(listViewValues.get(i));
+        }
+        adapter = new ArrayAdapter<>(this, R.layout.simplerow, listViewValues);
+        listTemplates.setAdapter(adapter);
+
+        listTemplates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String templateName = (String) (listTemplates.getItemAtPosition(position));
+                //String templateName = selectedFromList.getText().toString();
+
+                Intent myIntent = new Intent(NewGameActivity.this, MainActivity.class);
+                myIntent.putExtra("templateName",templateName);
+                startActivity(myIntent);
+            }
+        });
 
         start = (Button) findViewById(R.id.startGameButton);
 

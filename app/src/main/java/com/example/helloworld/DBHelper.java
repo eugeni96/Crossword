@@ -5,13 +5,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.provider.UserDictionary;
 import android.util.Log;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DBHelper extends SQLiteAssetHelper {
 
-        /*public static final String TABLE_WORDS = "words";
+/*        public static final String TABLE_WORDS = "words";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_WORD = "russWord";
         public static final String COLUMN_QUESTION = "question"; */
@@ -20,7 +24,7 @@ public class DBHelper extends SQLiteAssetHelper {
     private static final String DATABASE_NAME = "crossword.sqlite";
     private static final int DATABASE_VERSION = 1;
 
-    public interface TABLES{
+    public interface TABLES {
         String WORD = "WORD";
         String MASK = "MASK";
         String TEMPLATE = "TEMPLATE";
@@ -62,18 +66,6 @@ public class DBHelper extends SQLiteAssetHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-      /*  @Override
-        public void onCreate(SQLiteDatabase database) {
-            database.execSQL(DATABASE_CREATE);
-        }
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(DBHelper.class.getName(),
-                    "Upgrading database from version " + oldVersion + " to "
-                            + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS ");
-            onCreate(db);
-        } */
 
     public Cursor getWords() {
         SQLiteDatabase db = getWritableDatabase();
@@ -81,6 +73,7 @@ public class DBHelper extends SQLiteAssetHelper {
 
         qb.setTables(TABLES.WORD);
         Cursor c = qb.query(db, null, null, null, null, null, null);
+
         return c;
     }
 
@@ -93,37 +86,105 @@ public class DBHelper extends SQLiteAssetHelper {
 
 //        qb.setTables(TABLES.TEMPLATE);
 //        Cursor c = qb.query(db,{TemplateColumns.COLUMN_LENGTH}, TemplateColumns.COLUMN_HORIZONTAL+"=0", "SELECT max("+TemplateColumns.COLUMN_LENGTH+")",null,null,null );
-        Cursor c = db.rawQuery(queryString,null);
-        return c;
+        return db.rawQuery(queryString,null);
     }
 
     public Cursor getSizeColumn(){
         SQLiteDatabase db = getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         String queryString =
                 "SELECT max(length) FROM TEMPLATE " +
                         "WHERE horizontal = 0";
-        Cursor c = db.rawQuery(queryString,null);
-        return c;
+        return db.rawQuery(queryString,null);
     }
-    public int[] getTemplateSize()
+    public int[] getTemplateSize(String templateName)
     {
         SQLiteDatabase db = getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        String queryString = "SELECT x, y FROM TEMPLATE WHERE name = \"Easy breezy\" ";
-
-        Cursor c = db.rawQuery(queryString,null);
-
+        String queryString = "SELECT x, y FROM TEMPLATE WHERE name = \"" + templateName + "\"";
+        Cursor c = db.rawQuery(queryString, null);
         int[] size = new int[2];
-
         if(c != null)
         {
             c.moveToFirst();
             size[0] = c.getInt(c.getColumnIndex("x"));
             size[1] = c.getInt(c.getColumnIndex("y"));
+            c.close();
+        }
+        return size;
+    }
+
+    public int getTemplateIdByName(String templateName)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        String queryString = "SELECT _id FROM TEMPLATE WHERE name = \"" + templateName + "\"";
+        Cursor c = db.rawQuery(queryString, null);
+        int result = 0;
+        if (c != null)
+        {
+            c.moveToFirst();
+            result = c.getInt(c.getColumnIndex("_id"));
+            c.close();
+        }
+        return result;
+    }
+
+    public String getWordValueById(int id)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        String queryString = "SELECT engWord FROM WORD WHERE _id = " + id;
+        Cursor c = db.rawQuery(queryString, null);
+        String result = "";
+        if (c != null)
+        {
+            c.moveToFirst();
+            result = c.getString(c.getColumnIndex("engWord"));
+            c.close();
         }
 
-        return size;
+        return result;
+    }
+
+    public List<Word> getWordsByTemplateName(String templateName)
+    {
+        int templateId = getTemplateIdByName(templateName);
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String queryString = "SELECT word_id, x, y, horizontal FROM TEMPLATE_WORD " +
+                " WHERE template_id = " + templateId;
+        Cursor c = db.rawQuery(queryString, null);
+
+        List<Word> result = new ArrayList<>();
+
+        while(c.moveToNext())
+        {
+            Word word = new Word();
+            word.x = c.getInt(c.getColumnIndex("x"));
+            word.y = c.getInt(c.getColumnIndex("y"));
+            int wordId = c.getInt(c.getColumnIndex("word_id"));
+            word.word = getWordValueById(wordId);
+            word.length = word.word.length();
+            word.horizontal = (c.getInt(c.getColumnIndex("horizontal")) == 1);
+            result.add(word);
+        }
+        c.close();
+        return result;
+    }
+
+    public List<String> getTemplateNames()
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        String queryString = "SELECT name FROM TEMPLATE ";
+        Cursor c = db.rawQuery(queryString, null);
+
+        List<String> result = new ArrayList<>();
+
+        while (c.moveToNext())
+        {
+            String name = c.getString(c.getColumnIndex("name"));
+            result.add(name);
+        }
+        return result;
     }
 
 }
