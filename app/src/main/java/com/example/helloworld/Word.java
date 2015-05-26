@@ -14,6 +14,8 @@ public class Word {
     int             x;
     int             y;
     boolean         horizontal;
+    int             hint;
+    String          question;
 
     Word()
     {
@@ -42,6 +44,14 @@ public class Word {
         this.horizontal = horizontal;
         EditCell firstCell = (EditCell) activity.findViewById(firstCellId);
         letterList.add(firstCell);
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public int getHint() {
+        return hint;
     }
 
     public void SetNextCells()

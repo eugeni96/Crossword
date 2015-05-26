@@ -2,7 +2,9 @@ package com.example.helloworld.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -18,6 +20,9 @@ import java.util.List;
 public class MainActivity extends Activity {
 
     TextView questionView;
+    ListView questionsView;
+    ArrayAdapter<String> adapter;
+    List<String> questionsList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,5 +42,17 @@ public class MainActivity extends Activity {
         {
             word.letterList.get(0);
         }
+
+        questionsView = (ListView) findViewById(R.id.listView);
+
+        for (Word word : words)
+        {
+            questionsList.add(word.getHint() + ". " + word.getQuestion());
+        }
+
+        adapter = new ArrayAdapter<>(this, R.layout.simplerow, questionsList);
+        questionsView.setAdapter(adapter);
+
+
     }
 }

@@ -22,7 +22,7 @@ public class NewGameActivity extends Activity {
     Button start;
     ListView listTemplates;
     ArrayAdapter<String> adapter;
-    ArrayList<String> listItems = new ArrayList<>();
+    List<String> listItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +34,6 @@ public class NewGameActivity extends Activity {
         DBHelper helper = new DBHelper(this);
         List<String> listViewValues = helper.getTemplateNames();
 
-        for (int i = 0; i < listViewValues.size(); i++)
-        {
-            listItems.add(listViewValues.get(i));
-        }
         adapter = new ArrayAdapter<>(this, R.layout.simplerow, listViewValues);
         listTemplates.setAdapter(adapter);
 
@@ -45,8 +41,6 @@ public class NewGameActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String templateName = (String) (listTemplates.getItemAtPosition(position));
-                //String templateName = selectedFromList.getText().toString();
-
                 Intent myIntent = new Intent(NewGameActivity.this, MainActivity.class);
                 myIntent.putExtra("templateName",templateName);
                 startActivity(myIntent);

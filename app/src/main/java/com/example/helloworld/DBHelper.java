@@ -140,7 +140,22 @@ public class DBHelper extends SQLiteAssetHelper {
             result = c.getString(c.getColumnIndex("engWord"));
             c.close();
         }
+        return result;
+    }
 
+    public String getQuestionByWordId(int id)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        String queryString = "SELECT question FROM WORD WHERE _id = " + id;
+        Cursor c = db.rawQuery(queryString, null);
+        String result = "";
+        if (c != null)
+        {
+            c.moveToFirst();
+            result = c.getString(c.getColumnIndex("question"));
+            c.close();
+        }
         return result;
     }
 
@@ -155,7 +170,7 @@ public class DBHelper extends SQLiteAssetHelper {
         Cursor c = db.rawQuery(queryString, null);
 
         List<Word> result = new ArrayList<>();
-
+        int number = 1;
         while(c.moveToNext())
         {
             Word word = new Word();
@@ -163,9 +178,12 @@ public class DBHelper extends SQLiteAssetHelper {
             word.y = c.getInt(c.getColumnIndex("y"));
             int wordId = c.getInt(c.getColumnIndex("word_id"));
             word.word = getWordValueById(wordId);
+            word.question = getQuestionByWordId(wordId);
             word.length = word.word.length();
             word.horizontal = (c.getInt(c.getColumnIndex("horizontal")) == 1);
+            word.hint = number;
             result.add(word);
+            number++;
         }
         c.close();
         return result;
@@ -186,5 +204,6 @@ public class DBHelper extends SQLiteAssetHelper {
         }
         return result;
     }
+
 
 }
