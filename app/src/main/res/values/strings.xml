@@ -10,5 +10,7 @@
     <string name="title_activity_dynamic_table_layout">DynamicTableLayoutActivity</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_new_game">NewGameActivity</string>
+    <string name="title_activity_save_game">SaveGameActivity</string>
+    <string name="title_activity_load_game">LoadGameActivity</string>
 
 </resources>

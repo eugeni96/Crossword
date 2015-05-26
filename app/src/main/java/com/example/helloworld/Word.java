@@ -80,5 +80,6 @@ public class Word {
             }
         }
         letterList.get(0).setWord(this);
+        letterList.get(0).setHint(hint+"");
     }
 }
